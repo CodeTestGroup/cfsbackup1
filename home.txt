@@ -1,0 +1,16 @@
+<h1>Welcome to The CodeTestGroup Games website</h1>
+<p>We have lots of games!</p>
+
+
+<p></p>
+ <h2>Reasons to Upgrade to pro for only £1.99 a month!: (if you have already paid please click <a href="prologin.html">Here</a> to goto the login page!)</h2>
+        <ul>
+            <li><strong>Access Exclusive Games and Levels:</strong> Dive into a world of premium content with exclusive games and levels only available to Pro members.</li>
+            <li><strong>Priority Support:</strong> members receive top-notch customer support. Your queries and concerns become our top priority for swift resolution.</li>
+            <li><strong>Early Access to New Releases:</strong> Be the first to explore new games and updates! members enjoy exclusive early access, staying ahead of the gaming curve.</li>
+            <li><strong>Exclusive Discounts and Offers:</strong> Score big with special discounts on in-game purchases, merchandise, and other gaming-related goodies as a valued member.</li>
+            <li><strong>Personalize Your Gaming Space:</strong> Unlock additional customization options! members can personalize their gaming experience with unique avatars, themes, and cosmetic enhancements.</li>
+            <li><strong>Beta Testing Privileges:</strong> Get a sneak peek behind the scenes! members are invited to participate in beta testing for upcoming games and features, contributing to the evolution of our gaming universe.</li>
+        </ul>
+<h2>If you are intrested click <a href="pro.html">Here</a></h2>
+ 

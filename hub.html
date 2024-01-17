@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Your meta tags and title here -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #444;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    function loadContent(page) {
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          document.getElementById('content').innerHTML = xhr.responseText;
+        }
+      };
+
+      xhr.open('GET', `${page}.txt`, true);
+      xhr.send();
+    }
+
+    // Load the home page by default
+    loadContent('home');
+
+    // Attach the flappybird function to the onclick event
+    document.getElementById('flappyBirdLink').onclick = flappybird;
+
+    function flappybird() {
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            // Create an iframe and set its content
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', 'about:blank');
+            iframe.style.width = '450px';
+            iframe.style.height = '800px';
+
+            // Append the iframe to the parent container
+            document.getElementById('content').innerHTML = '';
+            document.getElementById('content').appendChild(iframe);
+
+            // Write content to the iframe document
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(xhr.responseText);
+            doc.close();
+          } else {
+            console.error('Failed to load Flappy Bird content. Status:', xhr.status);
+          }
+        }
+      };
+
+      // Adjust the path to flappybird.html based on your directory structure
+      xhr.open('GET', 'flappybird.html', true);
+      xhr.send();
+    }
+  </script>
+
+  <script>
+    // Function to extract the random number from the URL
+    const getRandomNumberFromUrl = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('num');
+    };
+
+    // Function to display the random number on the page and log it to the console
+    const displayRandomNumber = () => {
+      const randomNumber = getRandomNumberFromUrl();
+
+      if (randomNumber !== null) {
+       // const displayElement = document.createElement('p');
+       // displayElement.textContent = `UID: ${randomNumber}`;
+       // document.body.appendChild(displayElement);
+
+        // Log the random number to the console
+        console.log('devtools_UID:', randomNumber);
+      } else {
+        //const errorMessage = document.createElement('p');
+       // errorMessage.textContent = 'No random number specified in the URL.';
+       //document.body.appendChild(errorMessage);
+        window.location.href = 'badrequest.html';
+      }
+    };
+
+    // Call the displayRandomNumber function when the page loads
+    window.onload = displayRandomNumber;
+  </script>
+</head>
+<body>
+  <!-- Your HTML body content here -->
+
+  <header>
+    <h1>Welcome to the CODE Portal</h1>
+  </header>
+
+  <nav>
+    <a onclick="loadContent('home')">Home</a>
+    <a id="flappyBirdLink">Flappy Bird [ NEW ]</a>
+    <a href="https://codetestgroup.github.io/scb1/activities.html">Old Games</a>
+    <a href="prologin.html">Pro Login</a>
+  </nav>
+
+  <main id="content">
+    <!-- Content will be loaded here dynamically -->
+  </main>
+
+  <footer>
+    <p>&copy; 2024 CodeTestGroup</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms Of Service</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            text-align: center;
+            padding: 2em;
+        }
+
+        #hiddenLogin {
+            display: none;
+        }
+
+        #hiddenTOS {
+            display: none;
+        }
+    </style>
+
+    <script>
+        // Function to set a cookie with a random number or update it
+        function setCookie(value) {
+            const randomNumber = value || Math.floor(Math.random() * 100000);
+            document.cookie = `randomNumber=${randomNumber}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
+        }
+
+        // Function to handle form submission
+        function submitForm(event) {
+            event.preventDefault();
+
+            // Display the cookie status after form submission
+            const cookieStatusElement = document.getElementById('cookieStatus');
+
+            if (!cookieStatusElement) {
+                console.error('Element with id "cookieStatus" not found.');
+                return;
+            }
+
+            // Check if the cookie already exists
+            const hasCookie = document.cookie.includes('randomNumber=');
+
+            if (hasCookie) {
+                // If the cookie exists, get its value and set the random number
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith('randomNumber='))
+                    ?.split('=')[1];
+
+                setCookie(cookieValue);
+            } else {
+                // If the cookie doesn't exist, set a new random number
+                setCookie();
+            }
+
+            // Continue with your existing code to send names and redirect
+            var randomNumber = document.cookie.split('; ').find(row => row.startsWith('randomNumber=')).split('=')[1];
+
+            var firstName = document.getElementById('firstNameInput')?.value;
+            var lastName = document.getElementById('lastNameInput')?.value;
+            var email = document.getElementById('emailInput')?.value;
+
+            var info = ' firstname:' + firstName + ' - ' + ' lastname:' + lastName + ' - ' + ' uid:' + randomNumber;
+            var browserVersion = navigator.userAgent;
+            var timestamp = new Date().toISOString();
+            var url = 'https://ntfy.sh/GamesForSchoolTOS/publish?message=' + encodeURIComponent(info + ' (Browser Version: ' + browserVersion + ', Timestamp: ' + timestamp + ')') + '&priority=high&tags=warning';
+
+            // Use fetch to send the request
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Names, browser version, and timestamp sent successfully:', data);
+
+                    // Redirect after the fetch request is complete
+                    window.location.href = `hub.html?num=${randomNumber}`;
+                })
+                .catch(error => {
+                    console.error('Error sending names, browser version, and timestamp:', error);
+                });
+
+            // Display the cookie status after the form submission
+            cookieStatusElement.textContent = hasCookie ? '' : '';
+        }
+
+        // Check for the existence of the cookie on page load
+        window.onload = function () {
+            const cookieStatusElement = document.getElementById('cookieStatus');
+            const hasCookie = document.cookie.includes('randomNumber=');
+
+            cookieStatusElement.textContent = hasCookie ? '' : '';
+        };
+
+        function toggleTOS() {
+            var textElement = document.getElementById('hiddenTOS');
+            if (textElement.style.display === 'none') {
+                textElement.style.display = 'block';
+            } else {
+                textElement.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Log into for CodeForSchool!</h1>
+    </header>
+
+    <section>
+        <p id="cookieStatus"></p>
+
+        <form onsubmit="submitForm(event)">
+            <label for="firstNameInput">First Name:</label>
+            <input type="text" id="firstNameInput" placeholder="Enter first name">
+
+            <label for="lastNameInput">Last Name:</label>
+            <input type="text" id="lastNameInput" placeholder="Enter last name">
+
+            <label>
+            
+            
+                <input type="checkbox" id="showTextCheckbox"> I agree to the
+            </label>
+            <a href="#" onclick="toggleTOS()">Terms Of Service</a>
+         
+            <p id="hiddenLogin"><button type="submit">Login</button></p>
+          
+
+            <script>
+                const checkbox = document.getElementById('showTextCheckbox');
+                const hiddenText = document.getElementById('hiddenLogin');
+
+                checkbox.addEventListener('change', function() {
+                    hiddenText.style.display = this.checked ? 'block' : 'none';
+                });
+            </script>
+        </form>
+
+        <p id="hiddenTOS">By using this website, you agree to the following terms and conditions:
+
+1.  **Disclaimer of Warranties:**
+
+    *   This website and its features are provided "as is" without any representations or warranties, express or implied. We do not guarantee that your use of this website will be free from consequences, and we explicitly state that using this website inappropriately is entirely your responsibility. By accepting these terms, you acknowledge and accept the responsibility for your actions and agree not to shift blame to us (CodeTestGroup).
+2.  **Updates to Terms:**
+
+    *   We reserve the right to update or change these terms of service at any time. Your continued use of the website after any such changes constitutes your acceptance of the new terms. It is your responsibility to check this page periodically for changes.
+3.  **Accountability and Contact:**
+
+    *   If you have any questions or concerns about these terms of service, please contact us at codetestgroup@outlook.com. By using this website, you agree to be held accountable for your actions, and you accept that contacting us for clarification or resolution is your responsibility. </p>
+        
+        <p></p><br>
+        <small style="font-size: 10px;">By clicking "Login," you acknowledge and agree to the following:
+
+Data Interception Warning:
+
+You agree that your data may be intercepted by a third-party company as part of the CodeForSchool services. This interception is necessary for the proper functioning and optimization of our games.
+Keypress Data Collection:
+
+We may collect and process certain keypress data, including but not limited to the keys W, A, S, D, SPACE, for the sole purpose of enhancing and optimizing gameplay within our games. This data is utilized to improve user experience, troubleshoot issues, and ensure the proper functioning of the games.</small><br>
+
+    </section>
+</body>
+</html>

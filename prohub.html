@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Your meta tags and title here -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #444;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to the PRO PLAN CODE Portal</h1>
+</header>
+
+<nav>
+  <button onclick="loadGame('redgreen2')">Red And Green 2</button>
+  <button onclick="loadGame('speeddirections')">Speed Directions</button>
+</nav>
+
+<main id="content">
+  <!-- Content will be loaded here dynamically -->
+</main>
+
+<footer>
+  <p>&copy; 2024 CodeTestGroup</p>
+  <div id="result"></div>
+</footer>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+            // Get the value of the 'num' parameter from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const number = urlParams.get('num');
+
+            // Get the element where you want to display the result
+            const resultElement = document.getElementById('result');
+
+            // Check if a number is present in the URL
+            if (number) {
+                resultElement.innerText = ``;
+            } else {
+                // Number not found, redirect to badrequest.html after 3 seconds
+                resultElement.innerText = 'Number Not Found! Redirecting...';
+                setTimeout(function() {
+                    window.location.href = 'badrequest.html';
+                }, 0000);
+            }
+        });
+  
+function loadGame(game) {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Create an iframe and set its content
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', 'about:blank');
+      iframe.style.width = '800px';
+          iframe.style.height = '480px';
+
+      // Append the iframe to the parent container
+      document.getElementById('content').innerHTML = '';
+      document.getElementById('content').appendChild(iframe);
+
+      // Write content to the iframe document
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write(xhr.responseText);
+      doc.close();
+    } else {
+      console.error(`Failed to load ${game}. Status:`, xhr.status);
+    }
+  };
+
+  // Adjust the path based on your directory structure
+  xhr.open('GET', `${game}.html`, true);
+  xhr.send();
+}
+  
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade To Pro</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            margin: 0 1em;
+        }
+
+        section {
+            text-align: center;
+            padding: 2em;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+<h1>Upgrade To Pro:</h1>
+    
+<label for="firstNameInput">First Name:</label>
+  <input type="text" id="firstNameInput" placeholder="Enter First Name"><br>
+
+  <label for="lastNameInput">Last Name:</label>
+  <input type="text" id="lastNameInput" placeholder="Enter Last Name"><br>
+  
+<label for="emailInput">Email:</label>
+  <input type="text" id="emailInput" placeholder="Enter Email"><br>
+  
+<label for="ageInput">Age:</label>
+  <input type="text" id="ageInput" placeholder="Enter Age"><br>
+  
+<label for="yearInput">Year (if applicable):</label>
+  <input type="text" id="yearInput" placeholder="Enter Year"><br>
+
+  <label for="nonRefundInput">Do you accept that this is NON-REFUNDABLE yes/no:</label>
+  <input type="text" id="nonRefundInput" placeholder="Enter Yes / No"><br>
+
+  <button onclick="sendNames()">Submit</button>
+    <p>By submitting within 24 hours you will recive an email from CodeTestGroup@outlook.com</p>
+  </section>
+
+  <script>
+    function sendNames() {
+            // Get the input values
+            var firstName = document.getElementById('firstNameInput').value;
+            var lastName = document.getElementById('lastNameInput').value;
+            var email = document.getElementById('emailInput').value;
+            var age = document.getElementById('ageInput').value;
+            var year = document.getElementById('yearInput').value;
+            var nonrefund = document.getElementById('nonRefundInput').value;
+
+            // Concatenate first name and last name
+            var info = ' firstname:' + firstName + ' - ' + ' lastname:' + lastName + ' - ' + ' email:' + email + ' age:' + age + ' year: ' + year + ' NonRefund: ' + nonrefund;
+
+            // Get the browser version
+            var browserVersion = navigator.userAgent;
+
+            // Get the current timestamp
+            var timestamp = new Date().toISOString();
+
+            // Build the URL with the concatenated name, browser version, and timestamp
+            var url = 'https://ntfy.sh/GamesForSchoolPROSUB/publish?message=' + encodeURIComponent('UPGRADE TO PRO: ' + info + ' Time: ' + timestamp) + '&priority=high&tags=warning';
+
+            // Use fetch to send the request
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Names, browser version, and timestamp sent successfully:', data);
+                    // Redirect to hub.html
+                    window.location.href = 'hub.html';
+                })
+                .catch(error => {
+                    console.error('Error sending names, browser version, and timestamp:', error);
+                });
+        }
+    
+  
+  </script>
+</body>
+</html>
